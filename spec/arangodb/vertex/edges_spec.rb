@@ -36,7 +36,7 @@ RSpec.describe ArangoDB::OGM::Vertex::Edges do
 
   def drop_graph
     ArangoDB::OGM.graph_name = 'arangodb_drinks_graph'
-    ArangoDB::OGM.graph.delete if ArangoDB::OGM.graph.exists?
+    ArangoDB::OGM.graph.destroy if ArangoDB::OGM.graph.exists?
   end
 
   before(:all) { create_graph }
