@@ -1,6 +1,6 @@
 require './spec/spec_helper.rb'
 
-RSpec.describe ArangoDB::OGM::Edge, 'persistence', :with_database do
+RSpec.describe ArangoDB::OGM::Edge, 'persistence' do
 
   context 'with a new edge' do
     let(:from_obj) { ExampleVertex.create!(name: Faker::StarWars.character) }

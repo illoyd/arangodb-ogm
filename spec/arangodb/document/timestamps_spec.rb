@@ -5,7 +5,7 @@ class TimestampObject
   include ArangoDB::OGM::Document::Timestamps
 end
 
-describe ArangoDB::OGM::Document::Timestamps, :with_database do
+describe ArangoDB::OGM::Document::Timestamps do
 
   context 'with a new object' do
     subject { TimestampObject.new }

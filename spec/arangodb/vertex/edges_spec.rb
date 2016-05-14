@@ -1,6 +1,6 @@
 require './spec/spec_helper.rb'
 
-RSpec.describe ArangoDB::OGM::Vertex::Edges, :with_database do
+RSpec.describe ArangoDB::OGM::Vertex::Edges do
 
   class Person
     include ArangoDB::OGM::Vertex

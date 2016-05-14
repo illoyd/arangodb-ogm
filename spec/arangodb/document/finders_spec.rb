@@ -1,6 +1,6 @@
 require './spec/spec_helper.rb'
 
-RSpec.describe ArangoDB::OGM::Document, 'finders', :with_database do
+RSpec.describe ArangoDB::OGM::Document, 'finders' do
 
   context 'with a persisted object' do
     let(:name) { Faker::StarWars.character }
