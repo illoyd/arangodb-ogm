@@ -14,6 +14,13 @@ require 'arangodb/api'
 %w( base neighbours ).each { |file| require "arangodb/ogm/queries/#{ file }" }
 
 module ArangoDB
+
+  class DocumentHandle
+    def fetch
+      self.model_class.find(self.key)
+    end
+  end
+
   module OGM
     class Error < StandardError
       attr_reader :original
@@ -34,12 +41,6 @@ module ArangoDB
     end
 
     class ObjectNotSaved < ObjectError; end
-
-    class DocumentHandle
-      def fetch
-        self.class_name.find(self.key)
-      end
-    end
 
     ##
     # Client instance.
