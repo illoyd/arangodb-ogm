@@ -1,0 +1,2 @@
+#!/bin/bash
+pushd ../arangodb-api && bundle exec rake install && popd
