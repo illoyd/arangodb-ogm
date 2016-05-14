@@ -35,6 +35,12 @@ module ArangoDB
 
     class ObjectNotSaved < ObjectError; end
 
+    class DocumentHandle
+      def fetch
+        self.class_name.find(self.key)
+      end
+    end
+
     ##
     # Client instance.
     def self.client(*paths)
@@ -65,7 +71,7 @@ module ArangoDB
 
     def self.build(attributes)
       handle = attributes['_id']
-      handle = DocumentHandle.new(handle) unless handle.is_a?(DocumentHandle)
+      handle = ArangoDB::DocumentHandle.new(handle) unless handle.is_a?(ArangoDB::DocumentHandle)
       handle.collection.classify.constantize.new(attributes)
     end
   end

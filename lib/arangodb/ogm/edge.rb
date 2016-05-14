@@ -12,7 +12,7 @@ module ArangoDB
         attribute :_to,   :document_handle, validations: { presence: true }
 
         def from
-          if self.attribute('_from').is_a?(DocumentHandle)
+          if self.attribute('_from').is_a?(ArangoDB::DocumentHandle)
             self.from = self.attribute('_from').fetch
           end
           self.attribute('_from')
@@ -23,7 +23,7 @@ module ArangoDB
         end
 
         def to
-          if self.attribute('_to').is_a?(DocumentHandle)
+          if self.attribute('_to').is_a?(ArangoDB::DocumentHandle)
             self.from = self.attribute('_to').fetch
           end
           self.attribute('_to')
