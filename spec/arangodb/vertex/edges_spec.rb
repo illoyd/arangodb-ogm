@@ -10,33 +10,33 @@ RSpec.describe ArangoDB::OGM::Vertex::Edges do
     include ArangoDB::OGM::Vertex
   end
 
-  class Knows
+  class Know
     include ArangoDB::OGM::Edge
   end
 
-  class Drinks
+  class Drink
     include ArangoDB::OGM::Edge
   end
 
   def create_graph
     ArangoDB::OGM.graph_name = 'arangodb_drinks_graph'
-    ArangoDB::OGM.client.graph.post('name' => ArangoDB::OGM.graph_name, "edgeDefinitions" => [
+    ArangoDB::OGM.graph.create('name' => ArangoDB::OGM.graph_name, "edgeDefinitions" => [
       {
-        "collection" => Knows.collection_name,
+        "collection" => Know.collection_name,
         "from"       => [ Person.collection_name ],
         "to"         => [ Person.collection_name ]
       },
       {
-        "collection" => Drinks.collection_name,
+        "collection" => Drink.collection_name,
         "from"       => [ Person.collection_name ],
         "to"         => [ Beer.collection_name ]
       }
-    ] )
+    ] ) unless ArangoDB::OGM.graph.exists?
   end
 
   def drop_graph
     ArangoDB::OGM.graph_name = 'arangodb_drinks_graph'
-    ArangoDB::OGM.graph.delete
+    ArangoDB::OGM.graph.delete if ArangoDB::OGM.graph.exists?
   end
 
   before(:all) { create_graph }
@@ -48,12 +48,12 @@ RSpec.describe ArangoDB::OGM::Vertex::Edges do
     let(:personC)  { Person.create!(name: Faker::StarWars.character) }
     let(:beerX)    { Beer.create!(name: Faker::Beer.name) }
     let(:beerY)    { Beer.create!(name: Faker::Beer.name) }
-    let(:knowsAB)  { Knows.create!('from' => personA, 'to' => personB) }
-    let(:knowsAC)  { Knows.create!('from' => personA, 'to' => personC) }
-    let(:knowsBC)  { Knows.create!('from' => personB, 'to' => personC) }
-    let(:drinksAY) { Drinks.create!('from' => personA, 'to' => beerY) }
-    let(:drinksBX) { Drinks.create!('from' => personB, 'to' => beerX) }
-    let(:drinksCX) { Drinks.create!('from' => personC, 'to' => beerX) }
+    let(:knowsAB)  { Know.create!('from' => personA, 'to' => personB) }
+    let(:knowsAC)  { Know.create!('from' => personA, 'to' => personC) }
+    let(:knowsBC)  { Know.create!('from' => personB, 'to' => personC) }
+    let(:drinksAY) { Drink.create!('from' => personA, 'to' => beerY) }
+    let(:drinksBX) { Drink.create!('from' => personB, 'to' => beerX) }
+    let(:drinksCX) { Drink.create!('from' => personC, 'to' => beerX) }
     before         { knowsAB; knowsAC; knowsBC; drinksAY; drinksBX; drinksCX }
 
     describe '#edges' do
@@ -63,19 +63,19 @@ RSpec.describe ArangoDB::OGM::Vertex::Edges do
       end
 
       it 'finds all Knows (by collection name) from Person A' do
-        expect( personA.edges(Knows.collection_name).map(&:id) ).to match_array([ personB, personC ].map(&:id))
+        expect( personA.edges(Know.collection_name).map(&:id) ).to match_array([ personB, personC ].map(&:id))
       end
 
       it 'finds all Knows (by class) from Person A' do
-        expect( personA.edges(Knows).map(&:id) ).to match_array([ personB, personC ].map(&:id))
+        expect( personA.edges(Know).map(&:id) ).to match_array([ personB, personC ].map(&:id))
       end
 
       it 'finds all Drinks (by collection name) from Person A' do
-        expect( personA.edges(Drinks.collection_name).map(&:id) ).to match_array([ beerY ].map(&:id))
+        expect( personA.edges(Drink.collection_name).map(&:id) ).to match_array([ beerY ].map(&:id))
       end
 
       it 'finds all Drinks (by class) from Person A' do
-        expect( personA.edges(Drinks).map(&:id) ).to match_array([ beerY ].map(&:id))
+        expect( personA.edges(Drink).map(&:id) ).to match_array([ beerY ].map(&:id))
       end
 
     end
