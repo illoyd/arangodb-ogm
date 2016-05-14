@@ -30,7 +30,7 @@ module ArangoDB
         end
 
         def execute
-          ArangoDB::OGM.client('_api/cursor').post('query' => self.to_s).body['result'].map { |attr| ArangoDB::OGM.build(attr) }
+          ArangoDB::OGM.client('_api/cursor').post('query' => self.to_s).result.map { |attr| ArangoDB::OGM.build(attr) }
         end
 
         protected

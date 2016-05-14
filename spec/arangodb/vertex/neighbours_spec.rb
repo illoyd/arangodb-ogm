@@ -1,6 +1,6 @@
 require './spec/spec_helper.rb'
 
-RSpec.describe ArangoDB::OGM::Vertex::Edges do
+RSpec.describe ArangoDB::OGM::Vertex::Neighbours do
 
   class Person
     include ArangoDB::OGM::Vertex
@@ -56,26 +56,26 @@ RSpec.describe ArangoDB::OGM::Vertex::Edges do
     let(:drinksCX) { Drink.create!('from' => personC, 'to' => beerX) }
     before         { knowsAB; knowsAC; knowsBC; drinksAY; drinksBX; drinksCX }
 
-    describe '#edges' do
+    describe '#neighbours' do
 
       it 'finds all neighbours from Person A' do
-        expect( personA.edges.map(&:id) ).to match_array([ personB, personC, beerY ].map(&:id))
+        expect( personA.neighbours.map(&:id) ).to match_array([ personB, personC, beerY ].map(&:id))
       end
 
       it 'finds all Knows (by collection name) from Person A' do
-        expect( personA.edges(Know.collection_name).map(&:id) ).to match_array([ personB, personC ].map(&:id))
+        expect( personA.neighbours(Know.collection_name).map(&:id) ).to match_array([ personB, personC ].map(&:id))
       end
 
       it 'finds all Knows (by class) from Person A' do
-        expect( personA.edges(Know).map(&:id) ).to match_array([ personB, personC ].map(&:id))
+        expect( personA.neighbours(Know).map(&:id) ).to match_array([ personB, personC ].map(&:id))
       end
 
       it 'finds all Drinks (by collection name) from Person A' do
-        expect( personA.edges(Drink.collection_name).map(&:id) ).to match_array([ beerY ].map(&:id))
+        expect( personA.neighbours(Drink.collection_name).map(&:id) ).to match_array([ beerY ].map(&:id))
       end
 
       it 'finds all Drinks (by class) from Person A' do
-        expect( personA.edges(Drink).map(&:id) ).to match_array([ beerY ].map(&:id))
+        expect( personA.neighbours(Drink).map(&:id) ).to match_array([ beerY ].map(&:id))
       end
 
     end

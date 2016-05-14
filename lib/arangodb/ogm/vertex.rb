@@ -1,4 +1,4 @@
-%w( persistence edges ).each { |file| require "arangodb/ogm/vertex/#{ file }" }
+%w( persistence neighbours ).each { |file| require "arangodb/ogm/vertex/#{ file }" }
 
 module ArangoDB
   module OGM
@@ -6,7 +6,7 @@ module ArangoDB
       extend ActiveSupport::Concern
       include ArangoDB::OGM::Document
       include ArangoDB::OGM::Vertex::Persistence
-      include ArangoDB::OGM::Vertex::Edges
+      include ArangoDB::OGM::Vertex::Neighbours
 
       included do
       end # included
