@@ -46,11 +46,11 @@ module ArangoDB
         end
 
         def first
-          new( ArangoDB::OGM.client('_api/simple/first').put(collection: collection_name).body )
+          new( ArangoDB::OGM.client('_api/simple/first').put(collection: collection_name).body['result'] )
         end
 
         def last
-          new( ArangoDB::OGM.client('_api/simple/last').put(collection: collection_name).body )
+          new( ArangoDB::OGM.client('_api/simple/last').put(collection: collection_name).body['result'] )
         end
 
         ##
