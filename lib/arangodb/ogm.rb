@@ -11,7 +11,7 @@ require 'arangodb/api'
 %w( type schema document vertex edge ).each { |file| require "arangodb/ogm/#{ file }" }
 
 # Include queries
-%w( base neighbours ).each { |file| require "arangodb/ogm/queries/#{ file }" }
+%w( base neighbours edges ).each { |file| require "arangodb/ogm/queries/#{ file }" }
 
 module ArangoDB
 
