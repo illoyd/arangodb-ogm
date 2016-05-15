@@ -20,6 +20,7 @@ module ArangoDB
         end
 
         def where(search={})
+          search = _normalize_attributes(search)
           ArangoDB::OGM.client('_api/simple/by-example').put(collection: collection_name, example: search).body['result'].map { |obj| new(obj) }
         end
 
@@ -31,6 +32,7 @@ module ArangoDB
         end
 
         def find_by!(search={})
+          search = _normalize_attributes(search)
           new( ArangoDB::OGM.client('_api/simple/first-example').put(collection: collection_name, example: search).body['document'] )
         end
 

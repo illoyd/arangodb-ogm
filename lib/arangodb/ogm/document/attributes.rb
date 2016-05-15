@@ -47,7 +47,7 @@ module ArangoDB
           attributes.select { |k,_| k.to_s[0] == '_'.freeze }
         end
 
-        private
+        protected
 
         ##
         # Check if value is changing
@@ -72,6 +72,25 @@ module ArangoDB
       end # included
 
       class_methods do
+
+        ##
+        # Normalize against the primary schema
+        def _normalize_attribute(name, value)
+          normalized = value
+
+          compiled_schema[name].normalizers.each do |normalizer|
+            normalized = normalizer.respond_to?(:normalize) ? normalizer.normalize(normalized) : normalizer.call(normalized)
+          end
+
+          normalized
+        end
+
+        ##
+        # Normalize a Hash of attributes according to the object's schema.
+        def _normalize_attributes(attrs)
+          attrs.each_with_object({}) { |(k,v),h| h[k] = _normalize_attribute(k, v) }
+        end
+
       end # class_methods
 
     end
