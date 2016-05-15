@@ -18,8 +18,8 @@ module ArangoDB
             run_callbacks :create do
               results = ArangoDB::OGM.client('_api/edge').post(attributes) do |request|
                 request.params['collection']       = self.class.collection_name
-                request.params['from']             = self._from.to_s
-                request.params['to']               = self._to.to_s
+                request.params['from']             = ArangoDB::OGM::Type.lookup(:document_handle).serialize(self._from)
+                request.params['to']               = ArangoDB::OGM::Type.lookup(:document_handle).serialize(self._to)
                 request.params['createCollection'] = true
               end
 

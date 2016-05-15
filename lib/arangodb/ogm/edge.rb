@@ -12,25 +12,21 @@ module ArangoDB
         attribute :_to,   :document_handle, validations: { presence: true }
 
         def from
-          if self.attribute('_from').is_a?(ArangoDB::DocumentHandle)
-            self.from = self.attribute('_from').fetch
-          end
-          self.attribute('_from')
+          @cached_from ||= self._from.try(:fetch)
         end
 
         def from=(value)
-          self.send(:attribute=, '_from', value)
+          @cached_from = value.respond_to?(:document_handle) ? value : nil
+          self._from = value
         end
 
         def to
-          if self.attribute('_to').is_a?(ArangoDB::DocumentHandle)
-            self.from = self.attribute('_to').fetch
-          end
-          self.attribute('_to')
+          @cached_to ||= self._to.try(:fetch)
         end
 
         def to=(value)
-          self.send(:attribute=, '_to', value)
+          @cached_to = value.respond_to?(:document_handle) ? value : nil
+          self._to = value
         end
 
       end # included
