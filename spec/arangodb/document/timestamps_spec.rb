@@ -1,10 +1,5 @@
 require './spec/spec_helper.rb'
 
-class TimestampObject
-  include ArangoDB::OGM::Vertex
-  include ArangoDB::OGM::Document::Timestamps
-end
-
 describe ArangoDB::OGM::Document::Timestamps do
 
   context 'with a new object' do

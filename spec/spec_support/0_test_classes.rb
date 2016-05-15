@@ -7,3 +7,9 @@ end
 class ExampleEdge
   include ArangoDB::OGM::Edge
 end
+
+# Example Timestamp Object
+class TimestampObject
+  include ArangoDB::OGM::Vertex
+  include ArangoDB::OGM::Document::Timestamps
+end

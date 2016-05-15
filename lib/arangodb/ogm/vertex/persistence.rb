@@ -8,7 +8,7 @@ module ArangoDB
 
           def destroy
             run_callbacks :destroy do
-              ArangoDB::OGM.client('_api/document', document_handle).delete
+              ArangoDB::OGM.graph.resource('vertex', document_handle).delete
             end
           end
 
@@ -16,12 +16,9 @@ module ArangoDB
 
           def _create
             run_callbacks :create do
-              results = ArangoDB::OGM.client('_api/document').post(attributes) do |request|
-                request.params['collection'] = collection_name
-                request.params['createCollection'] = true
-              end
+              results = ArangoDB::OGM.graph.resource('vertex', collection_name).post(attributes)
 
-              assign_attributes(results.body)
+              assign_attributes(results.body['vertex'])
               changes_applied
               persisted?
             end
@@ -29,9 +26,9 @@ module ArangoDB
 
           def _update
             run_callbacks :update do
-              results = ArangoDB::OGM.client('_api/document', document_handle).patch(attributes)
+              results = ArangoDB::OGM.graph.resource('vertex', document_handle).patch(attributes)
 
-              assign_attributes(results.body)
+              assign_attributes(results.body['vertex'])
               changes_applied
               persisted?
             end
