@@ -8,7 +8,7 @@ require 'attribute_normalizer'
 require 'arangodb/api'
 
 # Include needed files
-%w( type schema document vertex edge ).each { |file| require "arangodb/ogm/#{ file }" }
+%w( type schema model document vertex edge ).each { |file| require "arangodb/ogm/#{ file }" }
 
 # Include queries
 %w( base neighbours edges ).each { |file| require "arangodb/ogm/queries/#{ file }" }
@@ -70,10 +70,5 @@ module ArangoDB
       self.client.graph(graph_name || self.graph_name)
     end
 
-    def self.build(attributes)
-      handle = attributes['_id']
-      handle = ArangoDB::DocumentHandle.new(handle) unless handle.is_a?(ArangoDB::DocumentHandle)
-      handle.collection.classify.constantize.new(attributes)
-    end
   end
 end

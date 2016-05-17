@@ -1,6 +1,6 @@
 require './spec/spec_helper.rb'
 
-describe ArangoDB::OGM::Document::Timestamps do
+describe ArangoDB::OGM::Model::Timestamps do
 
   context 'with a new object' do
     subject { TimestampObject.new }

@@ -4,7 +4,7 @@ module ArangoDB
   module OGM
     module Edge
       extend ActiveSupport::Concern
-      include ArangoDB::OGM::Document
+      include ArangoDB::OGM::Model
       include ArangoDB::OGM::Edge::Persistence
 
       included do

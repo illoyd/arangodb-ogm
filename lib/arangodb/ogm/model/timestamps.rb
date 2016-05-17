@@ -1,6 +1,6 @@
 module ArangoDB
   module OGM
-    module Document
+    module Model
       module Timestamps
         extend ActiveSupport::Concern
 
