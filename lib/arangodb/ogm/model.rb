@@ -1,13 +1,13 @@
-%w( schema_aware attribute_assignment attributes finders persistence timestamps ).each { |file| require "arangodb/ogm/document/#{ file }" }
+%w( schema_aware attribute_assignment attributes finders persistence timestamps ).each { |file| require "arangodb/ogm/model/#{ file }" }
 
 module ArangoDB
   module OGM
 
     ##
-    # Document module, a baseline mixin for objects to interact with the ArangoDB Document system.
+    # The Model, a baseline mixin for objects to interact with the ArangoDB Document system.
     # It is prefereable to use the Vertex or Edge mixins as those provide specific support for each
     # of those types in the Graph database.
-    module Document
+    module Model
       extend ActiveSupport::Concern
       extend ActiveModel::Callbacks
 
@@ -15,11 +15,11 @@ module ArangoDB
       include ActiveModel::AttributeMethods
       include ActiveModel::Dirty
 
-      include ArangoDB::OGM::SchemaAware
-      include ArangoDB::OGM::AttributeAssignment
-      include ArangoDB::OGM::Attributes
-      include ArangoDB::OGM::Finders
-      include ArangoDB::OGM::Persistence
+      include ArangoDB::OGM::Model::SchemaAware
+      include ArangoDB::OGM::Model::AttributeAssignment
+      include ArangoDB::OGM::Model::Attributes
+      include ArangoDB::OGM::Model::Finders
+      include ArangoDB::OGM::Model::Persistence
 
       include AttributeNormalizer
 

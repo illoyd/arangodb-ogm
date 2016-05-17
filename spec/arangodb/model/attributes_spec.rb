@@ -1,6 +1,6 @@
 require './spec/spec_helper.rb'
 
-RSpec.describe ArangoDB::OGM::Document, 'attributes' do
+RSpec.describe ArangoDB::OGM::Model::Attributes do
 
   context 'change detection' do
     let(:old_name) { 'Old' }

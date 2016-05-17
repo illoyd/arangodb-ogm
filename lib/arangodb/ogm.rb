@@ -8,7 +8,7 @@ require 'attribute_normalizer'
 require 'arangodb/api'
 
 # Include needed files
-%w( type schema document vertex edge ).each { |file| require "arangodb/ogm/#{ file }" }
+%w( type schema model vertex edge ).each { |file| require "arangodb/ogm/#{ file }" }
 
 # Include queries
 %w( base neighbours edges ).each { |file| require "arangodb/ogm/queries/#{ file }" }

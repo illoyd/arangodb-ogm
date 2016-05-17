@@ -4,7 +4,7 @@ module ArangoDB
   module OGM
     module Vertex
       extend ActiveSupport::Concern
-      include ArangoDB::OGM::Document
+      include ArangoDB::OGM::Model
       include ArangoDB::OGM::Vertex::Persistence
       include ArangoDB::OGM::Vertex::Neighbours
       include ArangoDB::OGM::Vertex::Edges

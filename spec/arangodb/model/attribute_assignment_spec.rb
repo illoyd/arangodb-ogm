@@ -4,7 +4,7 @@ class ShadowExampleVertex < ExampleVertex
   attr_accessor :shadow_quote
 end
 
-RSpec.describe ArangoDB::OGM::AttributeAssignment do
+RSpec.describe ArangoDB::OGM::Model::AttributeAssignment do
   subject { ExampleVertex.new(name: Faker::StarWars.character) }
   let(:quote) { Faker::StarWars.quote }
 

@@ -1,6 +1,7 @@
 require 'simplecov'
 SimpleCov.start do
   add_filter '/spec/'
+  add_group 'Model', 'ogm/model'
   add_group 'Document', 'ogm/document'
   add_group 'Vertex', 'ogm/vertex'
   add_group 'Edge', 'ogm/edge'
