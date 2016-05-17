@@ -70,10 +70,5 @@ module ArangoDB
       self.client.graph(graph_name || self.graph_name)
     end
 
-    def self.build(attributes)
-      handle = attributes['_id']
-      handle = ArangoDB::DocumentHandle.new(handle) unless handle.is_a?(ArangoDB::DocumentHandle)
-      handle.collection.classify.constantize.new(attributes)
-    end
   end
 end

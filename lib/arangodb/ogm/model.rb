@@ -23,6 +23,12 @@ module ArangoDB
 
       include AttributeNormalizer
 
+      def self.build(attributes)
+        handle = attributes['_id']
+        handle = ArangoDB::DocumentHandle.new(handle) unless handle.is_a?(ArangoDB::DocumentHandle)
+        handle.model_class.new(attributes)
+      end
+
       included do
 
         attribute_method_suffix '?'
