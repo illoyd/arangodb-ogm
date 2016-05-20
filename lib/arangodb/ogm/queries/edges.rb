@@ -34,9 +34,7 @@ module ArangoDB
         end
 
         def execute
-          ArangoDB::OGM.client('_api/cursor').post('query' => self.to_aql).result.map do |e|
-            ArangoDB::OGM::Model.build(e)
-          end
+          CollectionResult.new(ArangoDB::OGM.client('_api/cursor').post('query' => self.to_aql).body)
         end
 
       end
