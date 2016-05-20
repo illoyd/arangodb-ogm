@@ -23,10 +23,31 @@ module ArangoDB
 
       include AttributeNormalizer
 
-      def self.build(attributes)
-        handle = attributes['_id']
+      def self.build(document)
+
+        case document
+
+        when ->(doc){ doc.try(:has_key?, '_id'.freeze) }
+          return build_from_document(document)
+
+        when Enumerable
+          document.map { |subdoc| build(subdoc) }
+
+        else
+          document
+        end
+
+      end
+
+      def self.build_from_document(document)
+        handle = document['_id'.freeze]
         handle = ArangoDB::DocumentHandle.new(handle) unless handle.is_a?(ArangoDB::DocumentHandle)
-        handle.model_class.new(attributes)
+
+        handle.model_class.new(document).tap do |model|
+          model.document_attributes.each do |k,v|
+            model[k] = build(v) if v.is_a?(Enumerable)
+          end
+        end
       end
 
       included do
