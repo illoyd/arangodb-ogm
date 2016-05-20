@@ -22,7 +22,10 @@ module ArangoDB
 
           def where(search={})
             search = _normalize_attributes(search)
-            ArangoDB::OGM.client('_api/simple/by-example').put(collection: collection_name, example: search).body['result'].map { |obj| new(obj) }
+            #ArangoDB::OGM.client('_api/simple/by-example').put(collection: collection_name, example: search).body['result'].map { |obj| new(obj) }
+            CollectionResult.new(
+              ArangoDB::OGM.client('_api/simple/by-example').put(collection: collection_name, example: search).body
+            )
           end
 
           def find_by(search={})
@@ -34,7 +37,10 @@ module ArangoDB
 
           def find_by!(search={})
             search = _normalize_attributes(search)
-            new( ArangoDB::OGM.client('_api/simple/first-example').put(collection: collection_name, example: search).body['document'] )
+            DocumentResult.new(
+              ArangoDB::OGM.client('_api/simple/first-example').put(collection: collection_name, example: search).body,
+              key: :document
+            ).document
           end
 
           def find(id)
@@ -45,15 +51,23 @@ module ArangoDB
           end
 
           def find!(id)
-            new( ArangoDB::OGM.client('_api/document', collection_name, id).get.body )
+            DocumentResult.new(
+              ArangoDB::OGM.client('_api/document', collection_name, id).get.body
+            ).document
           end
 
           def first
-            new( ArangoDB::OGM.client('_api/simple/first').put(collection: collection_name).body['result'] )
+            DocumentResult.new(
+              ArangoDB::OGM.client('_api/simple/first').put(collection: collection_name).body,
+              key: :result
+            ).document
           end
 
           def last
-            new( ArangoDB::OGM.client('_api/simple/last').put(collection: collection_name).body['result'] )
+            DocumentResult.new(
+              ArangoDB::OGM.client('_api/simple/last').put(collection: collection_name).body,
+              key: :result
+            ).document
           end
 
           ##
