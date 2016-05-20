@@ -27,8 +27,11 @@ module ArangoDB
 
         case document
 
-        when ->(doc){ doc.try(:has_key?, '_id'.freeze) }
+        when self
           return build_from_document(document)
+
+        when Hash
+          document.each_with_object({}) { |(k,v),h| h[k] = build(v) }
 
         when Enumerable
           document.map { |subdoc| build(subdoc) }
@@ -48,6 +51,10 @@ module ArangoDB
             model[k] = build(v) if v.is_a?(Enumerable)
           end
         end
+      end
+
+      def self.===(other)
+        super || other.try(:has_key?, '_id'.freeze)
       end
 
       included do
